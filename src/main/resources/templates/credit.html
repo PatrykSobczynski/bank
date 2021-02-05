@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bank</title>
+</head>
+<body>
+    <form th:action="@{/accounts/{id}/takeCreditFinalize/(id=${account.getId()})}" th:object="${newCredit}" method="post">
+        <div>
+            How much money do you want to borrow?
+            <br>
+            <br>
+            <input type="text" th:field="*{cash}">
+        </div>
+        <br>
+        <button type="submit" value="Accept">Accept</button>
+    </form>
+</body>
+</html>

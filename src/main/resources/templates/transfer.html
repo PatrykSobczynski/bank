@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bank</title>
+</head>
+<body>
+    <form th:action="@{/accounts/{id}/transferFinalize/(id=${account.getId()})}" th:object="${newTransfer}" method="post">
+        <div>
+            Title of transfer
+            <input type="text" th:field="*{titleTransfer}">
+        </div>
+        <br>
+        <div>
+            USD to transfer
+            <input type="text" th:field="*{cashTransfer}">
+        </div>
+        <br>
+        <div>
+            ID receiver
+            <input type="text" th:field="*{receiverId}">
+        </div>
+        <button type="submit" value="Accept">Accept</button>
+    </form>
+</body>
+</html>
