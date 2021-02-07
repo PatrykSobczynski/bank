@@ -1,6 +1,7 @@
 package com.sobczynski.bank.Controller;
 
 import com.sobczynski.bank.Service.Service;
+import com.sobczynski.bank.model.Account;
 import com.sobczynski.bank.model.BankTransfer;
 import com.sobczynski.bank.model.Credit;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class Controller {
 
     // todo logowanie
     @GetMapping("/accounts/login")
-    public String login(Model model, Double id) {
+    public String login(Model model, Integer id) {
         model.addAttribute("accounts", service.getAccountList());
         if(id != null) {
             model.addAttribute("account", service.getAccountById(id));
@@ -34,14 +35,13 @@ public class Controller {
     }
 
     @GetMapping("/accounts/{id}")
-    public String account(Model model, @PathVariable Double id) {
+    public String account(Model model, @PathVariable Integer id) {
         model.addAttribute("account", service.getAccountById(id));
-        model.addAttribute("transfer", service.getTransferById((double) 0));
         return "account";
     }
 
     @GetMapping("/accounts/{id}/transfer")
-    public String transfer(Model model, @PathVariable Double id) {
+    public String transfer(Model model, @PathVariable Integer id) {
         model.addAttribute("account", service.getAccountById(id));
         model.addAttribute("transfer", service.getTransfersList());
         model.addAttribute("newTransfer", new BankTransfer());
@@ -49,21 +49,29 @@ public class Controller {
     }
 
     @GetMapping("/accounts/{id}/takeCredit")
-    public String credit(Model model, @PathVariable Double id) {
+    public String credit(Model model, @PathVariable Integer id) {
         model.addAttribute("account", service.getAccountById(id));
         model.addAttribute("credit", service.getCreditList());
         model.addAttribute("newCredit", new Credit());
         return "credit";
     }
 
+    @GetMapping("/accounts/{id}/payOffCredit")
+    public String payOff(Model model, @PathVariable Integer id) {
+        model.addAttribute("account", service.getAccountById(id));
+        model.addAttribute("credit", service.getCreditList());
+        model.addAttribute("newPayOffCredit", new Credit());
+        return "payOffCredit";
+    }
+
     @PostMapping("/accounts/{id}/payout")
-    public String payOut(@PathVariable Double id) {
+    public String payOut(@PathVariable Integer id) {
         service.payOutCash10(id);
         return "redirect:/accounts/{id}";
     }
 
     @PostMapping("/accounts/{id}/transferFinalize")
-    public String submitTransfer(@ModelAttribute BankTransfer eTransfer, @PathVariable Double id) {
+    public String submitTransfer(@ModelAttribute BankTransfer eTransfer, @PathVariable Integer id) {
 
         BankTransfer bankTransfer = new BankTransfer();
         bankTransfer.setSenderId(id);
@@ -76,7 +84,7 @@ public class Controller {
     }
 
     @PostMapping("/accounts/{id}/takeCreditFinalize")
-    public String submitCredit(@ModelAttribute Credit eCredit, @PathVariable Double id) {
+    public String submitCredit(@ModelAttribute Credit eCredit, @PathVariable Integer id) {
 
         Credit credit = new Credit();
         credit.setAccountId(id);
@@ -87,9 +95,14 @@ public class Controller {
         return "redirect:/accounts/{id}";
     }
 
-    @PostMapping("/accounts/{id}/payOffTheCredit")
-    public String payOffCredit(@PathVariable Double id) {
-        service.payOffTheCredit(id);
+    @PostMapping("/accounts/{id}/payOffTheCreditFinalize")
+    public String submitPayOffCredit(@ModelAttribute Credit eCredit, @PathVariable Integer id) {
+
+        Credit credit = new Credit();
+        credit.setCashToReturn(eCredit.getCashToReturn());
+
+        service.payOffTheCredit(credit, id, credit.getCashToReturn());
+
         return "redirect:/accounts/{id}";
     }
 }

@@ -34,34 +34,34 @@ public class ServiceImpl implements Service {
     public List<Credit> getCreditList() {return creditList;}
 
     @Override
-    public BankTransfer getTransferById(Double id) {
-        return bankTransfers.stream().filter(bankTransfer -> bankTransfer.getTransferId() == id).findFirst().get();
+    public BankTransfer getTransferById(Integer id) {
+        return bankTransfers.stream().filter(bankTransfer -> bankTransfer.getTransferId().equals(id)).findFirst().get();
     }
 
     @Override
-    public Account getAccountById(Double id) {
+    public Account getAccountById(Integer id) {
         return accounts.stream().filter(account -> account.getId() == id).findFirst().get();
     }
 
     @Override
-    public Credit getCreditById(Double id) {
+    public Credit getCreditById(Integer id) {
         return creditList.stream().filter(credit -> credit.getCreditId() == id).findFirst().get();
     }
 
     @Override
-    public BankTransfer findTransferById(Double id) {
+    public BankTransfer findTransferById(Integer id) {
         return bankTransfers.stream().filter(transfer -> transfer.getTransferId() == id).findFirst().get();
     }
 
     @Override
-    public void payOutCash10(Double id) {
+    public void payOutCash10(Integer id) {
         if(getAccountById(id).getMoneyOnAccount() >= 10) {
             getAccountById(id).setMoneyOnAccount(getAccountById(id).getMoneyOnAccount() - 10);
         }
     }
 
     @Override
-    public void transferMoney(BankTransfer transfer, Double sId, Double rId, Double cash) {
+    public void transferMoney(BankTransfer transfer, Integer sId, Integer rId, Double cash) {
         if(getAccountById(sId).getMoneyOnAccount() >= cash) {
             // Odejmowanie pieniędzy z salda konta robiącego przelew
             getAccountById(sId).setMoneyOnAccount(getAccountById(sId).getMoneyOnAccount() - transfer.getCashTransfer());
@@ -72,16 +72,18 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public void takeCredit(Credit credit, Double accountId, Double cash, double bankInterest) {
-        getAccountById(accountId).setMoneyOnAccount(getAccountById(accountId).getMoneyOnAccount() + cash);
-        getAccountById(accountId).setDebtInBank(getAccountById(accountId).getDebtInBank() + cash + cash * bankInterest);
+    public void takeCredit(Credit credit, Integer accountId, Double cash, double bankInterest) {
+        Account id = getAccountById(accountId);
+        id.setMoneyOnAccount(id.getMoneyOnAccount() + cash);
+        id.setDebtInBank(id.getDebtInBank() + cash + cash * bankInterest);
     }
 
     @Override
-    public void payOffTheCredit(Double accountId) {
-        if(getAccountById(accountId).getMoneyOnAccount() >= getAccountById(accountId).getDebtInBank()) {
-            getAccountById(accountId).setMoneyOnAccount(getAccountById(accountId).getMoneyOnAccount() - getAccountById(accountId).getDebtInBank());
-            getAccountById(accountId).setDebtInBank(0);
+    public void payOffTheCredit(Credit credit, Integer accountId, Double cash) {
+        Account id = getAccountById(accountId);
+        if(id.getMoneyOnAccount() >= credit.getCashToReturn()) {
+            id.setMoneyOnAccount(id.getMoneyOnAccount() - credit.getCashToReturn());
+            id.setDebtInBank(id.getDebtInBank() - credit.getCashToReturn());
         }
     }
 

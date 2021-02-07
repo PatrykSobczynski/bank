@@ -14,21 +14,20 @@ public interface Service {
 
     List<Credit> getCreditList();
 
-    BankTransfer getTransferById(Double Id);
+    BankTransfer getTransferById(Integer Id);
 
-    Account getAccountById(Double id);
+    Account getAccountById(Integer id);
 
-    Credit getCreditById(Double id);
+    Credit getCreditById(Integer id);
 
-    BankTransfer findTransferById(Double id);
+    BankTransfer findTransferById(Integer id);
 
-    void payOutCash10(Double id);
+    void payOutCash10(Integer id);
 
-    void transferMoney(BankTransfer transfer, Double sId, Double rId, Double cash);
+    void transferMoney(BankTransfer transfer, Integer sId, Integer rId, Double cash);
 
-    void takeCredit(Credit credit, Double accountId, Double cash, double bankInterest);
+    void takeCredit(Credit credit, Integer accountId, Double cash, double bankInterest);
 
-    void payOffTheCredit(Double accountId);
+    void payOffTheCredit(Credit credit, Integer accountId, Double cash);
 
-//    void updateTM(BankTransfer transfer, Double sId, Double rId, Double cash);
 }

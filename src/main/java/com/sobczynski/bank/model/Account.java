@@ -2,7 +2,7 @@ package com.sobczynski.bank.model;
 
 public class Account {
 
-    private double id;
+    private Integer id;
     private String name;
     private String surname;
     private String phoneNumber;
@@ -12,8 +12,12 @@ public class Account {
     private String password;
     private int accountNumber;
     private double debtInBank;
+    private double cashToPayOff;
 
-    public Account(double id, String name, String surname, String phoneNumber, double moneyOnAccount, Boolean isPremiumAccount, String login, String password, int accountNumber, double debtInBank) {
+    public Account() {
+    }
+
+    public Account(Integer id, String name, String surname, String phoneNumber, double moneyOnAccount, Boolean isPremiumAccount, String login, String password, int accountNumber, double debtInBank) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -30,8 +34,8 @@ public class Account {
     public void setDebtInBank(double debtInBank) { this.debtInBank = debtInBank; }
     public int getAccountNumber() { return accountNumber; }
     public void setAccountNumber(int accountNumber) { this.accountNumber = accountNumber; }
-    public double getId() { return id; }
-    public void setId(double id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public String getSurname() { return surname; }
@@ -46,4 +50,12 @@ public class Account {
     public void setLogin(String login) { this.login = login; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public double getCashToPayOff() {
+        return cashToPayOff;
+    }
+
+    public void setCashToPayOff(double cashToPayOff) {
+        this.cashToPayOff = cashToPayOff;
+    }
 }

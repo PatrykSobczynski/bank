@@ -8,8 +8,11 @@
     <form th:action="@{/accounts/{id}/takeCreditFinalize/(id=${account.getId()})}" th:object="${newCredit}" method="post">
         <div>
             How much money do you want to borrow?
-            <br>
-            <br>
+            <br><br>
+            Bank interest is
+            <a th:text="*{bankInterest}"></a>
+            %
+            <br><br>
             <input type="text" th:field="*{cash}">
         </div>
         <br>

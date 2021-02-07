@@ -13,11 +13,6 @@
     <a th:text=" ${account.moneyOnAccount} + USD"></a> <br>
     <a> Bank debt: </a>
     <a th:text="${account.debtInBank} + USD"></a> <br>
-<!--    <form th:action="@{/accounts/{id}/payout(id = ${account.getId()})}" th:object="${account}" method="post">-->
-<!--        <div class = "button">-->
-<!--            <input type="submit" value= "Pay out 10 USD">-->
-<!--        </div>-->
-<!--    </form>-->
     <form th:action="@{/accounts/{id}/takeCredit(id = ${account.getId()})}">
         <div>
             <input type="submit" value= "Take credit">
@@ -28,7 +23,7 @@
             <input type="submit" value= "Do transfer money">
         </div>
     </form>
-    <form th:action="@{/accounts/{id}/payOffTheCredit(id = ${account.getId()})}" th:object="${account}" method="post">
+    <form th:action="@{/accounts/{id}/payOffCredit(id = ${account.getId()})}">
         <div>
             <input type="submit" value="Pay off the credit">
         </div>
