@@ -4,6 +4,7 @@ import com.sobczynski.bank.Service.Service;
 import com.sobczynski.bank.model.Account;
 import com.sobczynski.bank.model.BankTransfer;
 import com.sobczynski.bank.model.Credit;
+import com.sobczynski.bank.model.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +24,10 @@ public class Controller {
         return "home";
     }
 
-    // todo logowanie
-    @GetMapping("/accounts/login")
-    public String login(Model model, Integer id) {
-        model.addAttribute("accounts", service.getAccountList());
-        if(id != null) {
-            model.addAttribute("account", service.getAccountById(id));
-            return "account";
-        }
-        return "loginPage";
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("readLogin", new Login());
+        return "login";
     }
 
     @GetMapping("/accounts/{id}")
@@ -104,5 +100,16 @@ public class Controller {
         service.payOffTheCredit(credit, id, credit.getCashToReturn());
 
         return "redirect:/accounts/{id}";
+    }
+
+    @PostMapping("/accounts/login")
+    public String submitLogin(@ModelAttribute Login eLogin) {
+
+        Login login = new Login();
+        login.setId(eLogin.getId());
+
+        service.login(login, login.getId(), login.getLogin(), login.getPassword());
+
+        return "redirect:/login";
     }
 }

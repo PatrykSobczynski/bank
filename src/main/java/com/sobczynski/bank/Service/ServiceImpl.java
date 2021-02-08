@@ -3,6 +3,7 @@ package com.sobczynski.bank.Service;
 import com.sobczynski.bank.model.Account;
 import com.sobczynski.bank.model.BankTransfer;
 import com.sobczynski.bank.model.Credit;
+import com.sobczynski.bank.model.Login;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +14,13 @@ public class ServiceImpl implements Service {
     public List<Account> accounts;
     public List<BankTransfer> bankTransfers;
     public List<Credit> creditList;
+    public List<Login> loginList;
 
     public ServiceImpl() {
         createAccount();
         createTransfer();
         createCredit();
+        createLogin();
     }
 
     @Override
@@ -40,17 +43,18 @@ public class ServiceImpl implements Service {
 
     @Override
     public Account getAccountById(Integer id) {
-        return accounts.stream().filter(account -> account.getId() == id).findFirst().get();
+        return accounts.stream().filter(account -> account.getId().equals(id)).findFirst().get();
     }
+
 
     @Override
     public Credit getCreditById(Integer id) {
-        return creditList.stream().filter(credit -> credit.getCreditId() == id).findFirst().get();
+        return creditList.stream().filter(credit -> credit.getCreditId().equals(id)).findFirst().get();
     }
 
     @Override
     public BankTransfer findTransferById(Integer id) {
-        return bankTransfers.stream().filter(transfer -> transfer.getTransferId() == id).findFirst().get();
+        return bankTransfers.stream().filter(transfer -> transfer.getTransferId().equals(id)).findFirst().get();
     }
 
     @Override
@@ -58,6 +62,13 @@ public class ServiceImpl implements Service {
         if(getAccountById(id).getMoneyOnAccount() >= 10) {
             getAccountById(id).setMoneyOnAccount(getAccountById(id).getMoneyOnAccount() - 10);
         }
+    }
+
+    @Override
+    public void login(Login login, Integer id, String loginName, String password) {
+        login.setId(id);
+        login.setLogin(loginName);
+        login.setPassword(password);
     }
 
     @Override
@@ -104,5 +115,10 @@ public class ServiceImpl implements Service {
     private void createCredit() {
         creditList = new ArrayList<>();
         creditList.add(new Credit());
+    }
+
+    private void createLogin() {
+        loginList = new ArrayList<>();
+        loginList.add(new Login());
     }
 }

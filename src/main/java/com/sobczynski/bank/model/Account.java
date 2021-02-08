@@ -12,7 +12,6 @@ public class Account {
     private String password;
     private int accountNumber;
     private double debtInBank;
-    private double cashToPayOff;
 
     public Account() {
     }
@@ -50,12 +49,4 @@ public class Account {
     public void setLogin(String login) { this.login = login; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
-
-    public double getCashToPayOff() {
-        return cashToPayOff;
-    }
-
-    public void setCashToPayOff(double cashToPayOff) {
-        this.cashToPayOff = cashToPayOff;
-    }
 }
