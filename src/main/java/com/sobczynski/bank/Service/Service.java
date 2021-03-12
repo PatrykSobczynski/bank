@@ -3,7 +3,6 @@ package com.sobczynski.bank.Service;
 import com.sobczynski.bank.model.Account;
 import com.sobczynski.bank.model.BankTransfer;
 import com.sobczynski.bank.model.Credit;
-import com.sobczynski.bank.model.Login;
 
 import java.util.List;
 
@@ -24,8 +23,6 @@ public interface Service {
     BankTransfer findTransferById(Integer id);
 
     void payOutCash10(Integer id);
-
-    void login(Login newLogin, Integer id, String login, String password);
 
     void transferMoney(BankTransfer transfer, Integer sId, Integer rId, Double cash);
 

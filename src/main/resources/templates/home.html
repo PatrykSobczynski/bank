@@ -7,11 +7,32 @@
 <body>
 <div>
     Welcome on page Paleno Bank
+    <br>
+    Searcher doesn't work yet
+    <br>
+    This solution is for that moment
     <br><br>
-                <!--    Tymczasowo id = 0 -->
-    <form th:action="@{/login}">
+    <form th:action="@{/accounts/0}">
         <div>
-            <input type="submit" value="Log in">
+            <input type="submit" value="Log in to 1 user's account">
+        </div>
+    </form>
+    <br><br>
+    <form th:action="@{/accounts/1}">
+        <div>
+            <input type="submit" value="Log in to 2 user's account">
+        </div>
+    </form>
+    <br><br>
+    <form th:action="@{/accounts/2}">
+        <div>
+            <input type="submit" value="Log in to 3 user's account">
+        </div>
+    </form>
+    <br><br>
+    <form th:action="@{/accounts/3}">
+        <div>
+            <input type="submit" value="Log in to 4 user's account">
         </div>
     </form>
 </div>
